@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>org.example</groupId>
+    <artifactId>chm</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <properties>
+        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
+<!--        pgsql-->
+<!--         <jdbc.url>jdbc:postgresql://id地址/数据库名?stringtype=unspecified</jdbc.url>
+        <driver>org.postgresql.Driver</driver>
+        <username>用户名</username>
+        <password>密码</password> -->
+<!--        mysql-->
+<!--        <jdbc.url>jdbc:mysql://127.0.0.1:3306/db0?serverTimezone=UTC</jdbc.url>-->
+<!--        <driver>com.mysql.cj.jdbc.Driver</driver>-->
+<!--        <username>root</username>-->
+<!--        <password>root</password>-->
+<!--        其他-->
+        <doc.title>数据库</doc.title>
+        <doc.name>数据库文档</doc.name>
+    </properties>
+    <dependencies>
+        <!-- 数据库连接 -->
+        <dependency>
+            <groupId>com.zaxxer</groupId>
+            <artifactId>HikariCP</artifactId>
+            <version>3.4.5</version>
+        </dependency>
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.3.5</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/postgresql-9.4.1211.jar</systemPath>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/cn.smallbun.screw/screw-core -->
+        <dependency>
+            <groupId>cn.smallbun.screw</groupId>
+            <artifactId>screw-core</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
+    </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>cn.smallbun.screw</groupId>
+                <artifactId>screw-maven-plugin</artifactId>
+                <version>1.0.5</version>
+                <dependencies>
+                    <!-- 数据库连接 -->
+                    <dependency>
+                        <groupId>com.zaxxer</groupId>
+                        <artifactId>HikariCP</artifactId>
+                        <version>3.4.5</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>mysql</groupId>
+                        <artifactId>mysql-connector-java</artifactId>
+                        <version>8.0.22</version>
+                    </dependency>
+                    <!-- https://mvnrepository.com/artifact/org.postgresql/postgresql -->
+                    <dependency>
+                        <groupId>org.postgresql</groupId>
+                        <artifactId>postgresql</artifactId>
+                        <version>42.3.5</version>
+                        <scope>system</scope>
+                        <systemPath>${project.basedir}/lib/postgresql-9.4.1211.jar</systemPath>
+                    </dependency>
+
+                </dependencies>
+                <configuration>
+                    <!-- 数据库相关配置 -->
+                    <driverClassName>${driver}</driverClassName>
+                    <jdbcUrl>${jdbc.url}</jdbcUrl>
+                    <username>${username}</username>
+                    <password>${password}</password>
+                    <!-- screw 配置 -->
+                    <!-- 文件类型 : HTML、WORD、MD-->
+                    <fileType>HTML</fileType>
+                    <!--打开文件输出目录-->
+                    <openOutputDir>false</openOutputDir>
+                    <!--     生成文件位置   默认:项目文件/doc/            -->
+<!--                    <fileOutputDir>C:\Users</fileOutputDir>-->
+                    <!--标题-->
+                    <title>${doc.title}</title>
+                    <!--文档名称 为空时:将采用[数据库名称-描述-版本号]作为文档名称-->
+                    <fileName>${doc.name}</fileName>
+                    <!--描述-->
+                    <description>数据库表结构说明文档</description>
+                    <!--版本-->
+                    <version>${maven.build.timestamp}</version>
+                    <!--打开文件输出目录-->
+                    <openOutputDir>false</openOutputDir>
+                    <!--生成模板-->
+                    <produceType>freemarker</produceType>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
